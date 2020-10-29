@@ -14,19 +14,19 @@ import PublicRoute from 'router/PublicRoute';
 import PrivateRoute from 'router/PrivateRoute';
 
 const App = () => {
-	const { stateChange } = useSelector(state => state.auth);
+	const { uid } = useSelector(state => state.auth);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		dispatch(authStateChangeUser());
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<Router>
 			<SideBar />
 
 			<Layout>
-				<Suspense fallback={<Loader onLoad={!stateChange} />}>
+				<Suspense fallback={<Loader onLoad={true} />}>
 					<Switch>
 						{routes.map(route =>
 							route.private ? (
@@ -43,3 +43,5 @@ const App = () => {
 };
 
 export default App;
+
+// import { FaPaperclip, FaVideo } from 'react-icons/fa';

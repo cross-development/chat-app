@@ -2,10 +2,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const state = {
-	userId: null,
-	fullName: null,
-	stateChange: false,
-	error: null,
+	uid: null,
+	displayName: '',
+	photoURL: null,
 };
 
 export const authSlice = createSlice({
@@ -14,22 +13,19 @@ export const authSlice = createSlice({
 	initialState: state,
 
 	reducers: {
-		updateUserProfile: (state, { payload }) => ({
+		setUserProfile: (state, { payload }) => ({
 			...state,
-			userId: payload.userId,
-			fullName: payload.fullName,
+			uid: payload.uid,
+			displayName: payload.displayName,
 		}),
 
-		authStateChange: (state, { payload }) => ({
+		updateProfile: (state, { payload }) => ({
 			...state,
-			stateChange: payload.stateChange,
+			uid: payload.uid,
+			photoURL: payload.photoURL,
+			displayName: payload.displayName,
 		}),
 
 		authSignOut: () => state,
-
-		setAuthError: (state, { payload }) => ({
-			...state,
-			error: payload,
-		}),
 	},
 });

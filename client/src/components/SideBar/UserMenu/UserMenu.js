@@ -1,19 +1,32 @@
 //Core
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+//Redux
+import { useDispatch } from 'react-redux';
+import { authSignOutUser } from 'redux/auth/authOperations';
 //Styles
-import {} from './UserMenu.styles'
+import { StyledNavLink, StyledNavList, StyledListItem } from './UserMenu.styles';
+import { FaSignOutAlt, FaCog } from 'react-icons/fa';
 
 const UserMenu = () => {
-    return (
-        <div>
-            UserMenu
-        </div>
-    )
-}
+	const dispatch = useDispatch();
 
-UserMenu.propTypes = {
+	const onSignOutUser = () => dispatch(authSignOutUser());
 
-}
+	return (
+		<StyledNavList>
+			<StyledListItem>
+				<StyledNavLink to="/settings" title="Settings">
+					<FaCog />
+				</StyledNavLink>
+			</StyledListItem>
 
-export default UserMenu
+			<StyledListItem>
+				<StyledNavLink exact to="/" onClick={onSignOutUser} title="Sing Out">
+					<FaSignOutAlt />
+				</StyledNavLink>
+			</StyledListItem>
+		</StyledNavList>
+	);
+};
+
+export default UserMenu;

@@ -1,19 +1,17 @@
 //Core
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
 //Styles
-import {} from './UserProfile.styles'
+import { StyledAvatarWrap, StyledAvatarImg, StyledNavLink } from './UserProfile.styles';
 
-const UserProfile = props => {
-    return (
-        <div>
-            UserProfile
-        </div>
-    )
-}
+//remove it after receive uid from redux
+const uid = 'qwe123';
 
-UserProfile.propTypes = {
+const UserProfile = () => (
+	<StyledAvatarWrap>
+		<StyledNavLink to={`/users/${uid}`}>
+			<StyledAvatarImg src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" />
+		</StyledNavLink>
+	</StyledAvatarWrap>
+);
 
-}
-
-export default UserProfile
+export default UserProfile;

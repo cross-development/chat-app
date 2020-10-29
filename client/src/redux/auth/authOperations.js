@@ -1,9 +1,17 @@
-//Redux
-import { authSlice } from './authReducers';
 //Database
 import firebase from 'firebase';
+//Redux
+import { authSlice } from './authReducers';
+import { errorSlice } from '../error/errorReducers';
+import { loaderSlice } from '../loader/loaderReducers';
 
-export const authSignUpUser = ({ email, password, fullName }) => async dispatch => {
+const { authSignOut, updateProfile, setUserProfile } = authSlice.actions;
+const { setLoading, unsetLoading } = loaderSlice.actions;
+const { setError } = errorSlice.actions;
+
+const authSignUpUser = ({ fullName, email, password }) => async dispatch => {
+	dispatch(setLoading());
+
 	try {
 		await firebase.auth().createUserWithEmailAndPassword(email, password);
 
@@ -12,62 +20,76 @@ export const authSignUpUser = ({ email, password, fullName }) => async dispatch 
 
 		const { uid, displayName } = await firebase.auth().currentUser;
 
-		dispatch(
-			authSlice.actions.updateUserProfile({
-				userId: uid,
-				fullName: displayName,
-			}),
-		);
+		dispatch(setUserProfile({ uid, displayName }));
 	} catch (error) {
-		dispatch(authSlice.actions.setAuthError(error));
-
-		console.log('error', error);
-		console.log('error.message', error.message);
+		dispatch(setError(error));
+	} finally {
+		dispatch(unsetLoading());
 	}
 };
 
-export const authSignInUser = ({ email, password }) => async dispatch => {
+const authSignInUser = ({ email, password }) => async dispatch => {
+	dispatch(setLoading());
+
 	try {
 		await firebase.auth().signInWithEmailAndPassword(email, password);
-	} catch (error) {
-		dispatch(authSlice.actions.setAuthError(error));
+		const { uid, displayName, photoURL } = await firebase.auth().currentUser;
 
-		console.log('error', error);
-		console.log('error.message', error.message);
+		dispatch(updateProfile({ uid, displayName, photoURL }));
+	} catch (error) {
+		dispatch(setError(error));
+	} finally {
+		dispatch(unsetLoading());
 	}
 };
 
-export const authSignOutUser = () => async dispatch => {
+const authSignOutUser = () => async dispatch => {
+	dispatch(setLoading());
+
 	try {
-		await firebase.auth().signOut();
-
-		dispatch(authSlice.actions.authSignOut());
+		await firebase
+			.auth()
+			.signOut()
+			.then(() => dispatch(authSignOut()));
 	} catch (error) {
-		dispatch(authSlice.actions.setAuthError(error));
-
-		console.log('error', error);
-		console.log('error.message', error.message);
+		dispatch(setError(error));
+	} finally {
+		dispatch(unsetLoading());
 	}
 };
 
-export const authStateChangeUser = () => async dispatch => {
-	try {
-		await firebase.auth().onAuthStateChanged(user => {
-			if (user) {
-				dispatch(
-					authSlice.actions.updateUserProfile({
-						userId: user.uid,
-						fullName: user.displayName,
-					}),
-				);
+const authStateChangeUser = () => async dispatch => {
+	dispatch(setLoading());
 
-				dispatch(authSlice.actions.authStateChange({ stateChange: true }));
+	try {
+		await firebase.auth().onAuthStateChanged(currentUser => {
+			if (currentUser) {
+				const { uid, displayName, photoURL } = currentUser;
+
+				dispatch(updateProfile({ uid, displayName, photoURL }));
 			}
 		});
 	} catch (error) {
-		dispatch(authSlice.actions.setAuthError(error));
-
-		console.log('error', error);
-		console.log('error.message', error.message);
+		dispatch(setError(error));
+	} finally {
+		dispatch(unsetLoading());
 	}
 };
+
+const updateUserProfile = ({ fullName, photoURL: photo }) => async dispatch => {
+	dispatch(setLoading());
+	try {
+		const user = await firebase.auth().currentUser;
+		await user.updateProfile({ displayName: fullName, photoURL: photo });
+
+		const { uid, displayName, photoURL } = await firebase.auth().currentUser;
+
+		dispatch(updateProfile({ uid, displayName, photoURL }));
+	} catch (error) {
+		dispatch(setError(error));
+	} finally {
+		dispatch(unsetLoading());
+	}
+};
+
+export { authSignUpUser, authSignInUser, authSignOutUser, authStateChangeUser, updateUserProfile };

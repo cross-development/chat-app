@@ -1,6 +1,6 @@
 //Core
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export const StyledNavList = styled.ul`
 	list-style: none;
@@ -8,6 +8,8 @@ export const StyledNavList = styled.ul`
 	align-items: center;
 	flex-direction: column;
 	justify-content: flex-start;
+	/* margin-top: auto; */
+	/* margin-bottom: 0; */
 `;
 
 export const StyledListItem = styled.li`
@@ -16,14 +18,10 @@ export const StyledListItem = styled.li`
 	}
 `;
 
-export const StyledNavLink = styled(NavLink)`
+export const StyledItemLink = styled(Link)`
 	color: #ffffff;
 	font-size: 32px;
 	transition: color 250ms linear;
-
-	&.active {
-		color: #34495e;
-	}
 
 	&:hover {
 		color: #34495e;
