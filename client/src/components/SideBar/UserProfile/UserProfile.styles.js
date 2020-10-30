@@ -11,7 +11,7 @@ export const StyledAvatarImg = styled.img`
 	display: block;
 	width: 100%;
 	height: auto;
-	border-radius: 50px;
+	border-radius: 50%;
 `;
 
 export const StyledNavLink = styled(NavLink)`

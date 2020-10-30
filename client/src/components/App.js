@@ -5,6 +5,8 @@ import { Switch, BrowserRouter as Router } from 'react-router-dom';
 import Layout from './Layout';
 import Loader from './Loader';
 import SideBar from './SideBar';
+import ContactsBar from './ContactsBar';
+import ContactProfile from './ContactProfile';
 //Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { authStateChangeUser } from 'redux/auth/authOperations';
@@ -25,6 +27,8 @@ const App = () => {
 		<Router>
 			<SideBar />
 
+			{uid && <ContactsBar />}
+
 			<Layout>
 				<Suspense fallback={<Loader onLoad={true} />}>
 					<Switch>
@@ -38,6 +42,8 @@ const App = () => {
 					</Switch>
 				</Suspense>
 			</Layout>
+
+			{uid && <ContactProfile />}
 		</Router>
 	);
 };
