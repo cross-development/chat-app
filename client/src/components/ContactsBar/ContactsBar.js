@@ -33,9 +33,10 @@ const StyledSection = styled.section`
 	/* justify-content: space-between; */
 	height: 100vh;
 	width: 20%;
+	/* border-right: 2px solid #d1d3d4; */
 	/* background-color: #3498db; */
 	padding-top: 2rem;
-	/* box-shadow: 0 0 8px 1px #000000; */
+	/* box-shadow: 0 0 8px 0.5px #d1d3d4; */
 `;
 
 export default ContactsBar;

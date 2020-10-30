@@ -12,7 +12,7 @@ export const StylesTitle = styled.h2`
 export const StylesTeamUL = styled.ul`
 	margin-left: 0;
 	margin-right: auto;
-	width: 95%;
+	width: 100%;
 	min-height: 80%;
 	max-height: 80%;
 	overflow-y: scroll;

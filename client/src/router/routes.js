@@ -27,12 +27,12 @@ const routes = [
 		component: lazy(() => import('pages/LoginPage' /* webpackChunkName: "login-page"*/)),
 	},
 	{
-		path: '/contacts/:contactId',
-		label: 'Contacts',
+		path: '/messages/:msgId',
+		label: 'Messages',
 		exact: false,
 		private: true,
 		restricted: false,
-		component: lazy(() => import('pages/ChatPage' /* webpackChunkName: "contact-page" */)),
+		component: lazy(() => import('pages/ChatPage' /* webpackChunkName: "messages-page" */)),
 	},
 	{
 		path: '/settings',

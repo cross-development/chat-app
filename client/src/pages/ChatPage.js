@@ -1,12 +1,14 @@
 //Core
-import React from 'react'
+import React from 'react';
+//Components
+import ChatBar from 'components/ChatBar';
 
 const ChatPage = () => {
-    return (
-        <div>
-            ChatPage
-        </div>
-    )
-}
+	return (
+		<>
+			<ChatBar />
+		</>
+	);
+};
 
-export default ChatPage
+export default ChatPage;

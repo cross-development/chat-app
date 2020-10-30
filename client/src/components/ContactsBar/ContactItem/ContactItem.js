@@ -7,7 +7,7 @@ import { StyledNameSpan, StyledAvatarIMG, StyledStatusSpan } from './ContactItem
 
 const ContactItem = ({ tmId, tmAvatar, tmName, isOnline }) => (
 	<StyledTeamLI key={tmId}>
-		<StyledTeamLink to={`/teammates/${tmId}`}>
+		<StyledTeamLink to={`/messages/${tmId}`}>
 			<StyledAvatarIMG src={`${process.env.PUBLIC_URL}/avatars/${tmAvatar}.png`} alt={tmName} />
 			<StyledNameSpan>{tmName}</StyledNameSpan>
 			<StyledStatusSpan isOnline={isOnline}></StyledStatusSpan>
